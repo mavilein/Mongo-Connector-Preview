@@ -4,7 +4,7 @@ This is a very early prototype that is mainly intended to test a new concept we 
 
 **How to use**
 
-The CLI does not yet know about the Mongo Connector, so some changes need to be done manually.
+The functionality for the Mongo Connector is present in the Prisma Core starting in 1.17-beta. The CLI does not yet know about the Mongo Connector though, so some changes need to be done manually.
 
 - install the Prisma cli
 - run `prisma init` - choose new local db with mysql
