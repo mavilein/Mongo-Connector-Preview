@@ -68,3 +68,7 @@ These are things that are currently not implemented yet, but we will be working 
 - A lot of deploy functionality not implemented (renaming does not work / Deleting a type does not delete it's collection)
 - If required fields are not in the db, there will be an error and the whole object will return null
 - Filters and pagination on nested Documents are ignored
+
+**Reporting Issues**
+
+Please report issues in this repo if something that is not listed as a known limitation breaks or you detect any other unexpected bugs. If you have general feedback or ideas for improvements let us know, we're always happy for suggestions and at this early stage it is easier to incorporate them.
