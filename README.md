@@ -73,7 +73,7 @@ type Child @embedded {
 
 These are things that are currently not implemented yet, but we will be working on these in the coming weeks.Since this is an early prototype things might fail with `Not Implemented` exceptions. This is not intended for production use.
 
-- ~~ No Upsert, neither on the top level nor nested ~~
+- ~~No Upsert, neither on the top level nor nested ~~
 - No raw Mongo query execution.
 - Unique Constraints are not enforced
 - Pagination (first, last, skip, after, before) not implemented.
