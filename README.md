@@ -53,6 +53,20 @@ The functionality for the Mongo Connector is present in the Prisma Core starting
 
 The Mongo connector introduces the concept of embedded types. These are stored nested within their parent types and do not have their own collections. They have no ids and no backrelations to their parents. We also do not generate toplevel queries or mutations for these. They can only be accessed through their respective parents. See more details and the reasoning behind them here: https://github.com/prisma/prisma/issues/2836
 
+This is how an embedded type would be defined in the schema:
+
+```graphql
+type Parent {
+  id: ID! @unique
+  name: String!
+  child: Child
+ }
+    
+type Child @embedded {
+  name: String!
+}
+```
+
 **Known Limitations**
 
 These are things that are currently not implemented yet, but we will be working on these in the coming weeks.Since this is an early prototype things might fail with `Not Implemented` exceptions. This is not intended for production use.
