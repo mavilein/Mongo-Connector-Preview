@@ -8,7 +8,7 @@ The functionality for the Mongo Connector is present in the Prisma Core starting
 
 We are changing the preview branch to alpha. This way you will always have the most current version of the connector. I've adjusted the docker-compose.yml accordingly. If you are still running on the 1.17-beta please restart prisma with the new alpha image. We'll merge new functionality regularly into the alpha and will adjust the list of known limitations accordingly.
 
-- install the Prisma cli
+- install the beta version of Prisma cli via `npm install -g prisma@beta`
 - run `prisma init` - choose new local db with mysql
 - switch out the auto-generated docker-compose.yml with the following one
 
