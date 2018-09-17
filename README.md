@@ -76,7 +76,7 @@ These are things that are currently not implemented yet, but we will be working 
 - ~~No Upsert, neither on the top level nor nested~~
 - No raw Mongo query execution.
 - Unique Constraints are not enforced
-- Pagination (first, last, skip, after, before) not implemented.
+- ~~Pagination (first, last, skip, after, before) not implemented.~~
 - Subscriptions are not working
 - The schema for embedded types will still contain connect / disconnect even though these do not work on embedded types
 - Relations are only implemented for embedded types 
