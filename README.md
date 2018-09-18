@@ -77,7 +77,7 @@ These are things that are currently not implemented yet, but we will be working 
 - No raw Mongo query execution.
 - Unique Constraints are not enforced
 - ~~Pagination (first, last, skip, after, before) not implemented.~~
-- Subscriptions are not working
+- ~~Subscriptions are not working~~ Nested Subscriptions don't work yet
 - The schema for embedded types will still contain connect / disconnect even though these do not work on embedded types
 - Relations are only implemented for embedded types 
 - Cascading delete not implemented, but since all relations are embedded they automatically behave as if cascade is set from top to bottom.
