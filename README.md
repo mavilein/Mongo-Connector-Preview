@@ -89,3 +89,8 @@ These are things that are currently not implemented yet, but we will be working 
 **Reporting Issues**
 
 Please report issues in this repo if something that is not listed as a known limitation breaks or you detect any other unexpected bugs. If you have general feedback or ideas for improvements let us know, we're always happy for suggestions and at this early stage it is easier to incorporate them.
+
+
+**Discussing the Development**
+
+If you have questions or want to discuss feature requests come on over to the Beta channel in the Prisma Slack. 
