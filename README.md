@@ -17,7 +17,7 @@ We are changing the preview branch to alpha. This way you will always have the m
     version: '3'
     services:
       prisma:
-        image: prismagraphql/prisma:1.18-alpha
+        image: prismagraphql/prisma:1.19-alpha
         restart: always
         ports:
         - "4466:4466"
@@ -29,7 +29,7 @@ We are changing the preview branch to alpha. This way you will always have the m
             databases:
               default:
                 connector: mongo
-                migrations: false
+                migrations: true
                 host: mongo
                 port: 27017
                 user: prisma
@@ -72,7 +72,7 @@ type Child @embedded {
 
 **Join Relations**
 
-These are the relations joining different collections. These are implemented in the newest version, but there are still some bugs around self relations (relations between models of the same type). Also the relational filters on Join Relations do not yet work (_some, _none, _every on Relationfields). In order to specify a join relation all rules about relation directives from the SQL connectors apply. Additionally the model side that is supposed to store the related ids inline has to be decorated with `@mongoRelation(field: "fieldNameInDB")`.
+These are the relations joining different collections. These are implemented in the newest version, but there are still some bugs around self relations (relations between models of the same type). Also the relational filters on Join Relations do not yet work (_some, _none, _every on Relationfields). In order to specify a join relation all rules about relation directives from the SQL connectors apply. Additionally the model side that is supposed to store the related ids inline has to be decorated with `@mongoRelation(field: "fieldNameInDB")`. There are still known bugs around self relations (relations between models of the same type) in this version that will be ironed out soon.
 
 ```graphql
 type Parent {
@@ -86,7 +86,6 @@ type Child  {
   parent: Parent
 }
 ```
-
 
 **Performance**
 
