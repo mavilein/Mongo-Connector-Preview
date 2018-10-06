@@ -52,6 +52,8 @@ We are changing the preview branch to alpha. This way you will always have the m
 - run `prisma deploy` with your datamodel as usual
 - have fun
 
+Since we are regularly merging new functionality / fixes for this preview you should run `docker-compose pull` when restarting your prisma server to make sure it pulls the latest version of the preview.
+
 **Embedded Types**
 
 The Mongo connector introduces the concept of embedded types. These are stored nested within their parent types and do not have their own collections. They have no ids and no backrelations to their parents. We also do not generate toplevel queries or mutations for these. They can only be accessed through their respective parents. See more details and the reasoning behind them here: https://github.com/prisma/prisma/issues/2836
@@ -72,7 +74,7 @@ type Child @embedded {
 
 **Join Relations**
 
-These are the relations joining different collections. These are implemented in the newest version, but there are still some bugs around self relations (relations between models of the same type). Also the relational filters on Join Relations do not yet work (_some, _none, _every on Relationfields). In order to specify a join relation all rules about relation directives from the SQL connectors apply. Additionally the model side that is supposed to store the related ids inline has to be decorated with `@mongoRelation(field: "fieldNameInDB")`. There are still known bugs around self relations (relations between models of the same type) in this version that will be ironed out soon.
+These are the relations joining different collections. Relational filters on Join Relations do not yet work (_some, _none, _every on Relationfields). In order to specify a join relation all rules about relation directives from the SQL connectors apply. Additionally the model side that is supposed to store the related ids inline has to be decorated with `@mongoRelation(field: "fieldNameInDB")`.
 
 ```graphql
 type Parent {
