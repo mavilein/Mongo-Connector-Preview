@@ -112,6 +112,7 @@ These are things that are currently not implemented yet, but we will be working 
 - A lot of deploy functionality not implemented (renaming does not work / Deleting a type does not delete it's collection)
 - If required fields are not in the db, there will be an error and the whole object will return null
 - Filters and pagination on nested Documents are ignored
+- Relational Filters on Join Relations do not work
 
 **Reporting Issues**
 
