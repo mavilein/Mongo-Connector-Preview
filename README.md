@@ -89,12 +89,33 @@ type Child  {
 }
 ```
 
+**Relations Between Embedded Types and Top Level Types other Than Their Parent**
+
+These allow an embedded type to link to other top level types. This relation will store the reference to the top level type on the embedded type. The relation can also only be traversed `Child` to `Friend` since there is no backrelation. This can be used to link to common shared data (country information in a shopping cart for example). The testing here is not as thorough as for the other types yet.
+
+```graphql
+type Parent{
+    name: String
+    child: Child
+}
+
+type Friend{
+    name: String
+}
+
+type Child @embedded {
+    name: String
+    friend: Friend @mongoRelation(field: "friend")
+}
+```
+
 **Performance**
 
 The performance of the current state of the connector is not indicative of the final performance. There are several improvements we will make that should speed it up noticeably.
 
 - only fetching selected fields / nested documents
-- indexes (on Id and relationId fields)
+- ~~indexes on top level types~~ have been added
+- indexes on embedded types
 
 **Known Limitations**
 
@@ -107,7 +128,7 @@ These are things that are currently not implemented yet, but we will be working 
 - ~~Subscriptions are not working~~ Nested Subscriptions don't work yet
 - The schema for embedded types will still contain connect / disconnect even though these do not work on embedded types
 - ~~Relations are only implemented for embedded types~~
-- Cascading delete not implemented
+- Cascading delete not yet implemented
 - No Import / Export implemented yet
 - A lot of deploy functionality not implemented (renaming does not work / Deleting a type does not delete it's collection)
 - If required fields are not in the db, there will be an error and the whole object will return null
