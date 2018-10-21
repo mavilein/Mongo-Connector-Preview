@@ -123,7 +123,7 @@ These are things that are currently not implemented yet, but we will be working 
 
 - ~~No Upsert, neither on the top level nor nested~~
 - No raw Mongo query execution.
-- ~~Unique Constraints are not enforced~~
+- ~~Unique Constraints are not enforced~~ They are not enforced within embedded documents due to a bug in Mongo https://jira.mongodb.org/browse/SERVER-1068
 - ~~Pagination (first, last, skip, after, before) not implemented.~~
 - ~~Subscriptions are not working~~ Nested Subscriptions don't work yet
 - The schema for embedded types will still contain connect / disconnect even though these do not work on embedded types
