@@ -17,7 +17,7 @@ We are changing the preview branch to alpha. This way you will always have the m
     version: '3'
     services:
       prisma:
-        image: prismagraphql/prisma:1.20-alpha
+        image: prismagraphql/prisma:1.21-alpha
         restart: always
         ports:
         - "4466:4466"
