@@ -17,7 +17,7 @@ We are changing the preview branch to alpha. This way you will always have the m
     version: '3'
     services:
       prisma:
-        image: prismagraphql/prisma:1.19-alpha
+        image: prismagraphql/prisma:1.20-alpha
         restart: always
         ports:
         - "4466:4466"
@@ -91,7 +91,7 @@ type Child  {
 
 **Relations Between Embedded Types and Top Level Types other Than Their Parent**
 
-These allow an embedded type to link to other top level types. This relation will store the reference to the top level type on the embedded type. The relation can also only be traversed `Child` to `Friend` since there is no backrelation. This can be used to link to common shared data (country information in a shopping cart for example). The testing here is not as thorough as for the other types yet.
+These allow an embedded type to link to other top level types. This relation will store the reference to the top level type on the embedded type. The relation can also only be traversed `Child` to `Friend` since there is no backrelation. This can be used to link to common shared data (country information in a shopping cart for example).
 
 ```graphql
 type Parent{
