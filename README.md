@@ -107,29 +107,31 @@ type Child @embedded {
 }
 ```
 
+**Nested DeleteMany / UpdateMany**
+
+Since unique constraints on embedded documents are not enforced due to a Mongo bug https://jira.mongodb.org/browse/SERVER-1068  we are introducing these two new nested mutations to address related nodes without them having a unique constraint. You can find more information about how these work here: https://github.com/prisma/prisma/pull/3376 We will soon remove the possibility to set unique constraints on embedded types until the Mongo bug is fixed. 
+
 **Performance**
 
 The performance of the current state of the connector is not indicative of the final performance. There are several improvements we will make that should speed it up noticeably.
 
 - only fetching selected fields / nested documents
-- ~~indexes on top level types~~ have been added
 - indexes on embedded types
 
 **Known Limitations**
 
-These are things that are currently not implemented yet, but we will be working on these in the coming weeks.Since this is an early prototype things might fail with `Not Implemented` exceptions. This is not intended for production use.
+These are things that are currently not implemented yet, but we will be working on these in the coming weeks.Since this is an early prototype things might fail with `Not Implemented` exceptions. This is not yet intended for production use.
 
-- ~~No Upsert, neither on the top level nor nested~~
-- No raw Mongo query execution.
-- ~~Unique Constraints are not enforced~~ They are not enforced within embedded documents due to a bug in Mongo https://jira.mongodb.org/browse/SERVER-1068
-- ~~Pagination (first, last, skip, after, before) not implemented.~~
-- ~~Subscriptions are not working~~ Nested Subscriptions don't work yet
+**Features Other Connectors Have That Will Be Implemented Later**
+- Cascading delete
+- Bulk Import / Export
+- Raw Mongo query execution.
+
+***API Differences (schema is not yet adjusted )
+
+- Unique Constraints are not enforced within embedded documents due to a bug in Mongo https://jira.mongodb.org/browse/SERVER-1068 
 - The schema for embedded types will still contain connect / disconnect even though these do not work on embedded types
-- ~~Relations are only implemented for embedded types~~
-- Cascading delete not yet implemented
-- No Import / Export implemented yet
 - A lot of deploy functionality not implemented (renaming does not work / Deleting a type does not delete it's collection)
-- If required fields are not in the db, there will be an error and the whole object will return null
 - Filters and pagination on nested Documents are ignored
 - Relational Filters on Join Relations do not work
 
