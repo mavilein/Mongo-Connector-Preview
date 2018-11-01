@@ -118,16 +118,12 @@ The performance of the current state of the connector is not indicative of the f
 - only fetching selected fields / nested documents
 - indexes on embedded types
 
-**Known Limitations**
-
-These are things that are currently not implemented yet, but we will be working on these in the coming weeks.Since this is an early prototype things might fail with `Not Implemented` exceptions. This is not yet intended for production use.
-
 **Features Other Connectors Have That Will Be Implemented Later**
 - Cascading delete
 - Bulk Import / Export
-- Raw Mongo query execution.
+- Raw query execution.
 
-***API Differences (schema is not yet adjusted )
+**API Differences (schema is not yet adjusted )**
 
 - Unique Constraints are not enforced within embedded documents due to a bug in Mongo https://jira.mongodb.org/browse/SERVER-1068 
 - The schema for embedded types will still contain connect / disconnect even though these do not work on embedded types
