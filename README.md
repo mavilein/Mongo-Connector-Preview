@@ -1,7 +1,6 @@
 # Mongo-Connector-Preview
 
 This is a repo for an early preview of the Mongo Connector.
-This is a very early prototype that is mainly intended to test a new concept we are introducing with the Mongo connector - embedded types. Normal relations have now been added.
 
 **How to use**
 
@@ -126,7 +125,6 @@ The performance of the current state of the connector is not indicative of the f
 **API Differences (schema is not yet adjusted )**
 
 - Unique Constraints are not enforced within embedded documents due to a bug in Mongo https://jira.mongodb.org/browse/SERVER-1068 
-- The schema for embedded types will still contain connect / disconnect even though these do not work on embedded types
 - A lot of deploy functionality not implemented (renaming does not work / Deleting a type does not delete it's collection)
 - Filters and pagination on nested Documents are ignored
 - Relational Filters on Join Relations do not work
