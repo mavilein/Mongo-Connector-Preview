@@ -4,50 +4,9 @@ This is a repo for an early preview of the Mongo Connector.
 
 **How to use**
 
-The latest functionality for the Mongo Connector can always be found on the alpha branch. The CLI does not yet know about the Mongo Connector though, so some changes need to be done to the `docker-compose.yml` manually. We'll merge new functionality regularly into the alpha and will adjust the list of known limitations accordingly.
+The latest functionality for the Mongo Connector can always be found on the alpha branch. 
 
-- install the beta version of Prisma cli via `npm install -g prisma@beta`
-- run `prisma init` - choose new local db with mysql
-- switch out the auto-generated docker-compose.yml with the following one
-
-```yml
-    version: '3'
-    services:
-      prisma:
-        image: prismagraphql/prisma:1.21-alpha
-        restart: always
-        ports:
-        - "4466:4466"
-        environment:
-          PRISMA_CONFIG: |
-            port: 4466
-            # uncomment the next line and provide the env var PRISMA_MANAGEMENT_API_SECRET=my-secret to activate cluster security
-            # managementApiSecret: my-secret
-            databases:
-              default:
-                connector: mongo
-                migrations: true
-                host: mongo
-                port: 27017
-                user: prisma
-                password: prisma
-      mongo:
-        image: mongo:3.6
-        restart: always
-        environment:
-          MONGO_INITDB_ROOT_USERNAME: prisma
-          MONGO_INITDB_ROOT_PASSWORD: prisma
-        ports:
-          - "27017:27017"
-    volumes:
-          - mongo:/var/lib/mongo
-    volumes:
-      mongo:
-```
-
-- run `docker-compose up -d`
-- run `prisma deploy` with your datamodel as usual
-- have fun
+The alpha CLI now has support for the Mongo Connector. You can install it using `npm install -g prisma@alpha`. Then you can choose Mongo when setting up your database. The  method below should no longer be necessary. 
 
 Since we are regularly merging new functionality / fixes for this preview you should run `docker-compose pull` when restarting your prisma server to make sure it pulls the latest version of the preview.
 
@@ -137,3 +96,52 @@ Please report issues in this repo if something that is not listed as a known lim
 **Discussing the Development**
 
 If you have questions or want to discuss feature requests come on over to the Beta channel in the Prisma Slack. 
+
+**Setting Up Mongo Without CLI Support**
+
+Some changes need to be done to the `docker-compose.yml` manually. We'll merge new functionality regularly into the alpha and will adjust the list of known limitations accordingly.
+
+- install the beta version of Prisma cli via `npm install -g prisma@beta`
+- run `prisma init` - choose new local db with mysql
+- switch out the auto-generated docker-compose.yml with the following one
+
+```yml
+    version: '3'
+    services:
+      prisma:
+        image: prismagraphql/prisma:1.21-alpha
+        restart: always
+        ports:
+        - "4466:4466"
+        environment:
+          PRISMA_CONFIG: |
+            port: 4466
+            # uncomment the next line and provide the env var PRISMA_MANAGEMENT_API_SECRET=my-secret to activate cluster security
+            # managementApiSecret: my-secret
+            databases:
+              default:
+                connector: mongo
+                migrations: true
+                host: mongo
+                port: 27017
+                user: prisma
+                password: prisma
+      mongo:
+        image: mongo:3.6
+        restart: always
+        environment:
+          MONGO_INITDB_ROOT_USERNAME: prisma
+          MONGO_INITDB_ROOT_PASSWORD: prisma
+        ports:
+          - "27017:27017"
+    volumes:
+          - mongo:/var/lib/mongo
+    volumes:
+      mongo:
+```
+
+- run `docker-compose up -d`
+- run `prisma deploy` with your datamodel as usual
+- have fun
+
+
