@@ -79,14 +79,9 @@ The performance of the current state of the connector is not indicative of the f
 **Features Other Connectors Have That Will Be Implemented Later**
 - Cascading delete
 - Bulk Import / Export
-- Raw query execution.
-
-**API Differences (schema is not yet adjusted )**
-
-- Unique Constraints are not enforced within embedded documents due to a bug in Mongo https://jira.mongodb.org/browse/SERVER-1068 
-- A lot of deploy functionality not implemented (renaming does not work / Deleting a type does not delete it's collection)
-- Filters and pagination on nested Documents are ignored
-- Relational Filters on Join Relations do not work
+- Raw query execution
+- Relational filters on Join Relations towards non-embedded types
+- query arguments (where, first, last, skip etc) on nested relations towards embedded types
 
 **Reporting Issues**
 
