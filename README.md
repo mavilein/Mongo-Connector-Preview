@@ -10,7 +10,66 @@ The alpha CLI now has support for the Mongo Connector. You can install it using 
 
 Since we are regularly merging new functionality / fixes for this preview you should run `docker-compose pull` when restarting your prisma server to make sure it pulls the latest version of the preview.
 
-**Embedded Types**
+# The Data Model
+The Mongo Connector uses a new data model syntax that differs from the one that you may know from the SQL connectors. This new syntax will become the default for all connectors eventually. If you are interested you can follow the discussion around the [specification](https://github.com/prisma/prisma/issues/3408).
+
+## Configuration of field behaviour
+In the past Prisma relied on conventions, e.g. the primary identifier always had to be called `id`. We removed this opiniation with the new data model. But therefore you have to configure which field should act as the primary identifier.
+
+**Configuring a field as id**
+The validation requires one id field per type that is not embedded. (Embedded Types are explained further down) 
+```graphql
+type Blog {
+  id: ID! @id
+  name: String!
+}
+```
+
+**Configuring a field as createdAt or updatedAt**
+```graphql
+type Post{
+  id: ID! @id
+  title: String!
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+}
+```
+
+**Configuring a default value for a field**
+```graphql
+type Post {
+  id: ID! @id
+  viewCount: Int! @default(value:0)
+}
+```
+
+**Configuring a field as unique**
+```graphql
+type Post {
+  id: ID! @id
+  slug: String! @unique
+}
+```
+
+**Configuring a different underlying database name for a field**
+
+In the following example the title of a Post will be stored in field `myFancyTitleField` in the underlying Mongo Document. It will be still exposed under the name `title`.
+```graphql
+type Post {
+  id: ID! @id
+  title: String! @db(name: "myFancyTitleField")
+}
+```
+
+In the following example Posts will be stored in the collection `MyFancyPostCollection`.
+```graphql
+type Post @db(name: "MyFancyPostCollection"){
+  id: ID! @id
+  title: String! 
+}
+```
+
+## Configuring Relations
 
 The Mongo connector introduces the concept of embedded types. These are stored nested within their parent types and do not have their own collections. They have no ids and no backrelations to their parents. We also do not generate toplevel queries or mutations for these. They can only be accessed through their respective parents. See more details and the reasoning behind them here: https://github.com/prisma/prisma/issues/2836
 
@@ -30,13 +89,14 @@ type Child @embedded {
 
 **Join Relations**
 
-These are the relations joining different collections. Relational filters on Join Relations do not yet work (_some, _none, _every on Relationfields). In order to specify a join relation all rules about relation directives from the SQL connectors apply. Additionally the model side that is supposed to store the related ids inline has to be decorated with `@mongoRelation(field: "fieldNameInDB")`.
+These are the relations joining different collections. Relational filters on Join Relations do not yet work (`_some`, `_none`, `_every` on Relationfields). In order to specify a join relation all rules about relation directives from the SQL connectors apply. Additionally the model side that should store the relation links has to specify the `strategy` argument.
 
+In the following example the `Parent` document will store the id of a `Child` document within the child field.
 ```graphql
 type Parent {
   id: ID! @unique
   name: String!
-  child: Child @mongoRelation(field: "fieldNameInDB")
+  child: Child @relation(strategy: EMBED)
  }
     
 type Child  {
@@ -47,27 +107,33 @@ type Child  {
 
 **Relations Between Embedded Types and Top Level Types other Than Their Parent**
 
-These allow an embedded type to link to other top level types. This relation will store the reference to the top level type on the embedded type. The relation can also only be traversed `Child` to `Friend` since there is no backrelation. This can be used to link to common shared data (country information in a shopping cart for example).
+These allow an embedded type to link to other top level types. This relation will store the reference to the top level type on the embedded type. The relation can also only be traversed from `Child` to `Friend` since there is no backrelation. This can be used to link to common shared data (country information in a shopping cart for example).
 
 ```graphql
-type Parent{
+type Parent {
     name: String
     child: Child
 }
 
-type Friend{
-    name: String
-}
-
 type Child @embedded {
     name: String
-    friend: Friend @mongoRelation(field: "friend")
+    friend: Friend @relation(strategy: EMBED)
+}
+
+type Friend {
+    name: String
 }
 ```
+
+
+## API Changes
 
 **Nested DeleteMany / UpdateMany**
 
 Since unique constraints on embedded documents are not enforced due to a Mongo bug https://jira.mongodb.org/browse/SERVER-1068  we are introducing these two new nested mutations to address related nodes without them having a unique constraint. You can find more information about how these work here: https://github.com/prisma/prisma/pull/3376 We will soon remove the possibility to set unique constraints on embedded types until the Mongo bug is fixed. 
+
+
+## Other
 
 **Performance**
 
